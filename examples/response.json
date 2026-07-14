@@ -1,0 +1,21 @@
+{
+  "decision": "VERIFIED_PACKET_READY",
+  "answer": null,
+  "llm_called": false,
+  "verified_packet": {
+    "query": "Verify trace_id=TRACE-9001 and request_id=REQ-9001",
+    "evidence": [
+      {
+        "id": "F1",
+        "source": "incident_log",
+        "content": "trace_id=TRACE-9001 request_id=REQ-9001 status=FAILED"
+      }
+    ],
+    "audit": {
+      "guard_passed": true,
+      "evidence_count": 1,
+      "fail_closed": true,
+      "source_runtime": "private_pail"
+    }
+  }
+}

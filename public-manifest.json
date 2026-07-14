@@ -1,0 +1,21 @@
+{
+  "release": "PAIL Developer Preview",
+  "version": "0.1.0",
+  "date": "2026-07-14",
+  "public_surfaces": [
+    "HTTP contract",
+    "OpenAPI schema",
+    "Python client",
+    "JavaScript client",
+    "SutraFlow syntax and examples",
+    "architecture and benchmark summaries"
+  ],
+  "excluded_surfaces": [
+    "private parser/compiler/runtime",
+    "executable grammar and guard rules",
+    "acoustic key and frequency implementation",
+    "ranking and compression internals",
+    "datasets, indexes, secrets, and learned state"
+  ],
+  "claim_boundary": "research developer preview; not an enterprise, customer-accuracy, or AGI certification"
+}

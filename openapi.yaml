@@ -1,0 +1,73 @@
+openapi: 3.1.0
+info:
+  title: PAIL Public Gateway
+  version: 0.1.0
+  description: Public-safe contract for a separately hosted private PAIL runtime.
+servers:
+  - url: https://ancient-intelligence-lab.kakarotvira06.workers.dev
+paths:
+  /api/health:
+    get:
+      operationId: health
+      responses:
+        "200":
+          description: Public service status
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [service, status, runtime_connected, public_core_exposed]
+                properties:
+                  service: { type: string }
+                  status: { type: string }
+                  runtime_connected: { type: boolean }
+                  llm_connected: { type: boolean }
+                  public_core_exposed: { type: boolean, const: false }
+  /api/capabilities:
+    get:
+      operationId: capabilities
+      responses:
+        "200":
+          description: Stable public capability metadata
+          content:
+            application/json:
+              schema: { type: object }
+  /api/query:
+    post:
+      operationId: guardedQuery
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [query, corpus_id]
+              properties:
+                query: { type: string, minLength: 1, maxLength: 4096 }
+                corpus_id: { type: string, pattern: "^[a-f0-9]{32}$" }
+                limit: { type: integer, minimum: 1, maximum: 10, default: 5 }
+      responses:
+        "200": { description: Verified packet or grounded answer }
+        "400": { description: Invalid public request }
+        "422": { description: No verified evidence }
+        "503": { description: Private runtime not connected }
+  /api/ingest:
+    post:
+      operationId: ingestCorpus
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [files]
+              properties:
+                files:
+                  type: array
+                  maxItems: 10
+                  items: { type: string, format: binary }
+                section: { type: string, maxLength: 80 }
+      responses:
+        "201": { description: Isolated corpus created by private runtime }
+        "413": { description: Upload empty or too large }
+        "503": { description: Private runtime not connected }

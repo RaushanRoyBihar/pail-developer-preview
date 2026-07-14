@@ -1,0 +1,17 @@
+cognition BoundedResearchAgent
+budget tokens=512 steps=18 timeout_ms=7000 candidates=64
+permission local_search mode=read
+
+flow answer
+  run task_planner max_steps=4
+  run search_tool permission=local_search
+  run candidate_locator limit=48
+  run identity_guard
+  run relation_guard
+  run conflict_guard
+  run fact_reasoner max_facts=256
+  run packet_compiler tokens=512 preserve=ids,citations,conflicts
+  run model_proposal citations=required
+  run answer_envelope
+  silence below=0.72 on=conflict,insufficient,timeout,error
+end

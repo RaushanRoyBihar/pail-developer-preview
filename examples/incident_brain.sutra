@@ -1,0 +1,19 @@
+cognition IncidentBrain
+budget tokens=384 steps=16 timeout_ms=5000 candidates=64
+
+flow answer
+  run candidate_locator limit=32
+  run identity_guard
+  run attention_cycle passes=2
+  run relation_guard
+  run conflict_guard
+  run fact_reasoner max_facts=128
+  run adaptive_memory mode=recall
+  run packet_compiler tokens=384 preserve=ids,citations,conflicts
+  run answer_envelope
+  silence below=0.72 on=conflict,insufficient,timeout,error
+end
+
+flow feedback
+  run adaptive_memory mode=learn verified_only=true
+end
