@@ -1,14 +1,15 @@
 {
   "release": "PAIL Developer Preview",
-  "version": "0.1.0",
-  "date": "2026-07-14",
+  "version": "0.2.0",
+  "date": "2026-08-05",
   "public_surfaces": [
     "HTTP contract",
     "OpenAPI schema",
     "Python client",
     "JavaScript client",
     "SutraFlow syntax and examples",
-    "architecture and benchmark summaries"
+    "architecture and bounded benchmark summaries",
+    "links to the public-safe browser evaluator"
   ],
   "excluded_surfaces": [
     "private parser/compiler/runtime",
